@@ -9,15 +9,13 @@ import {
   Search, 
   Calendar,
   Send,
-  Filter,
   Download,
   CheckCircle,
   XCircle,
   Clock,
   Eye,
   RefreshCw,
-  AlertCircle,
-  Activity
+  AlertCircle
 } from 'lucide-react'
 import { useState, useMemo } from 'react'
 import { useData } from '@/contexts/DataContext'
@@ -46,16 +44,13 @@ export default function EmailsPage() {
   // Calculate email stats from campaigns data
   const totalEmailsSent = campaigns.reduce((sum, c) => sum + c.emailsSent, 0)
   const totalOpened = campaigns.reduce((sum, c) => sum + c.opened, 0)
-  const totalClicked = campaigns.reduce((sum, c) => sum + c.clicked, 0)
   
   const openRate = totalEmailsSent > 0 ? ((totalOpened / totalEmailsSent) * 100).toFixed(1) : '0.0'
-  const clickRate = totalEmailsSent > 0 ? ((totalClicked / totalEmailsSent) * 100).toFixed(1) : '0.0'
 
   // Summary metrics
   const totalEmails = emailData.length
   const emailsSent = emailData.filter(e => e.status === 'email_sent').length
   const pending = emailData.filter(e => e.status === 'pending').length
-  const failed = emailData.filter(e => e.status === 'failed').length
 
   // Filter emails
   const filteredEmails = emailData.filter(email => {

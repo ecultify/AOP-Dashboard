@@ -11,7 +11,7 @@ interface SheetInfo {
   rowCount: number;
   columnCount: number;
   headers: string[];
-  sampleData: any[];
+  sampleData: string[][];
   dataTypes: { [key: string]: string };
 }
 
@@ -33,7 +33,7 @@ function getAuthClient() {
   return null;
 }
 
-function detectDataType(value: any): string {
+function detectDataType(value: string | undefined): string {
   if (!value || value === '') return 'empty';
   if (!isNaN(Number(value))) return 'number';
   if (value.match(/^\d{4}-\d{2}-\d{2}$/)) return 'date';

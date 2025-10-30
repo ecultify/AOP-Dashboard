@@ -84,7 +84,7 @@ export interface AnalyticsData {
   blocks: number;
 }
 
-export async function getGoogleSheetsData(sheetName: string): Promise<any[]> {
+export async function getGoogleSheetsData(sheetName: string): Promise<Record<string, string | number>[]> {
   try {
     if (!GOOGLE_SHEET_ID) {
       throw new Error('Google Sheet ID not configured');
@@ -118,7 +118,7 @@ export async function getGoogleSheetsData(sheetName: string): Promise<any[]> {
 
     // Convert rows to objects
     const result = data.map((row, index) => {
-      const obj: any = { id: index + 1 };
+      const obj: Record<string, string | number> = { id: index + 1 };
       headers.forEach((header, i) => {
         obj[header.toLowerCase().replace(/\s+/g, '_')] = row[i] || '';
       });
