@@ -154,13 +154,13 @@ export async function getWebsitesData(): Promise<WebsiteData[]> {
     
     return rawData.map((row, index) => ({
       id: index + 1,
-      url: row.website_url || row.url || row.website || '',
-      title: row.title || row.name || '',
-      category: row.keywords_used || row.category || 'Uncategorized',
-      dateFound: row.discovery_date || row.date_found || row.date || new Date().toISOString().split('T')[0],
+      url: String(row.website_url || row.url || row.website || ''),
+      title: String(row.title || row.name || ''),
+      category: String(row.keywords_used || row.category || 'Uncategorized'),
+      dateFound: String(row.discovery_date || row.date_found || row.date || new Date().toISOString().split('T')[0]),
       emailsExtracted: row.contact_email ? 1 : 0,
-      status: row.contact_status?.toLowerCase() === 'email_sent' ? 'processed' : 
-              row.contact_status?.toLowerCase() === 'pending' ? 'pending' : 'pending',
+      status: String(row.contact_status || '').toLowerCase() === 'email_sent' ? 'processed' : 
+              String(row.contact_status || '').toLowerCase() === 'pending' ? 'pending' : 'pending',
     }));
   } catch (error) {
     console.error('Error fetching websites data:', error);
@@ -175,17 +175,17 @@ export async function getWebsitesDetailData(): Promise<WebsiteDetailData[]> {
     
     return rawData.map((row, index) => ({
       id: index + 1,
-      url: row.website_url || '',
-      title: row.title || '',
-      description: (row.description || '').substring(0, 100) + '...',
-      category: row.keywords_used || 'Uncategorized',
-      dateFound: row.discovery_date || '',
-      contactStatus: row.contact_status || 'Pending',
-      contactEmail: row.contact_email || '',
-      contactName: row.contact_name || '',
-      socialLinks: row.social_links || '',
-      keywordsUsed: row.keywords_used || '',
-      platform: row.platform || '',
+      url: String(row.website_url || ''),
+      title: String(row.title || ''),
+      description: String(row.description || '').substring(0, 100) + '...',
+      category: String(row.keywords_used || 'Uncategorized'),
+      dateFound: String(row.discovery_date || ''),
+      contactStatus: String(row.contact_status || 'Pending'),
+      contactEmail: String(row.contact_email || ''),
+      contactName: String(row.contact_name || ''),
+      socialLinks: String(row.social_links || ''),
+      keywordsUsed: String(row.keywords_used || ''),
+      platform: String(row.platform || ''),
     }));
   } catch (error) {
     console.error('Error fetching websites detail data:', error);
@@ -200,13 +200,13 @@ export async function getCampaignsData(): Promise<CampaignData[]> {
     
     return rawData.map((row, index) => ({
       id: index + 1,
-      name: row.name || row.campaign_name || '',
-      status: row.status || 'active',
-      emailsSent: parseInt(row.emails_sent || row.sent || '0'),
-      opened: parseInt(row.opened || row.opens || '0'),
-      clicked: parseInt(row.clicked || row.clicks || '0'),
-      responded: parseInt(row.responded || row.responses || '0'),
-      dateCreated: row.date_created || row.date || new Date().toISOString().split('T')[0],
+      name: String(row.name || row.campaign_name || ''),
+      status: String(row.status || 'active'),
+      emailsSent: parseInt(String(row.emails_sent || row.sent || '0')),
+      opened: parseInt(String(row.opened || row.opens || '0')),
+      clicked: parseInt(String(row.clicked || row.clicks || '0')),
+      responded: parseInt(String(row.responded || row.responses || '0')),
+      dateCreated: String(row.date_created || row.date || new Date().toISOString().split('T')[0]),
     }));
   } catch (error) {
     console.error('Error fetching campaigns data:', error);
@@ -221,12 +221,12 @@ export async function getEmailsData(): Promise<EmailData[]> {
     
     return rawData.map((row, index) => ({
       id: index + 1,
-      email: row.email || '',
-      website: row.website || '',
-      status: row.status || 'pending',
-      dateSent: row.date_sent || null,
-      response: row.response || 'none',
-      subject: row.subject || '',
+      email: String(row.email || ''),
+      website: String(row.website || ''),
+      status: String(row.status || 'pending'),
+      dateSent: row.date_sent ? String(row.date_sent) : null,
+      response: String(row.response || 'none'),
+      subject: String(row.subject || ''),
     }));
   } catch (error) {
     console.error('Error fetching emails data:', error);
@@ -242,13 +242,13 @@ export async function getKeywordsData(): Promise<KeywordData[]> {
     return rawData
       .filter((row) => row.date && row.keywords) // Only include rows with both date and keywords
       .map((row, index) => {
-        const keywordsString = row.keywords || '';
+        const keywordsString = String(row.keywords || '');
         // Split keywords by comma and trim whitespace
         const keywordsList = keywordsString ? keywordsString.split(',').map((k: string) => k.trim()).filter((k: string) => k) : [];
         
         return {
           id: index + 1,
-          date: row.date || new Date().toISOString().split('T')[0],
+          date: String(row.date || new Date().toISOString().split('T')[0]),
           keywords: keywordsString,
           keywordsList: keywordsList,
         };
@@ -267,9 +267,9 @@ export async function getDashboardMetrics(): Promise<DashboardMetric[]> {
     return rawData
       .filter((row) => row.metric && row.value) // Only include rows with metric and value
       .map((row) => ({
-        metric: row.metric || '',
-        value: row.value?.toString() || '0',
-        lastUpdated: row.last_updated || '',
+        metric: String(row.metric || ''),
+        value: String(row.value || '0'),
+        lastUpdated: String(row.last_updated || ''),
       }));
   } catch (error) {
     console.error('Error fetching dashboard metrics:', error);
@@ -286,17 +286,17 @@ export async function getAnalyticsData(): Promise<AnalyticsData[]> {
       .filter((row) => row.date) // Only include rows with dates
       .map((row, index) => ({
         id: index + 1,
-        date: row.date || '',
-        requests: parseInt(row.requests || '0'),
-        delivered: parseInt(row.delivered || '0'),
-        bounces: parseInt(row.bounces || '0'),
-        opens: parseInt(row.opens || '0'),
-        uniqueOpens: parseInt(row.unique_opens || '0'),
-        clicks: parseInt(row.clicks || '0'),
-        uniqueClicks: parseInt(row.unique_clicks || '0'),
-        spamReports: parseInt(row.spam_reports || '0'),
-        unsubscribes: parseInt(row.unsubscribes || '0'),
-        blocks: parseInt(row.blocks || '0'),
+        date: String(row.date || ''),
+        requests: parseInt(String(row.requests || '0')),
+        delivered: parseInt(String(row.delivered || '0')),
+        bounces: parseInt(String(row.bounces || '0')),
+        opens: parseInt(String(row.opens || '0')),
+        uniqueOpens: parseInt(String(row.unique_opens || '0')),
+        clicks: parseInt(String(row.clicks || '0')),
+        uniqueClicks: parseInt(String(row.unique_clicks || '0')),
+        spamReports: parseInt(String(row.spam_reports || '0')),
+        unsubscribes: parseInt(String(row.unsubscribes || '0')),
+        blocks: parseInt(String(row.blocks || '0')),
       }));
   } catch (error) {
     console.error('Error fetching analytics data:', error);

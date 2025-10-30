@@ -12,8 +12,7 @@ import {
   Send,
   RefreshCw,
   AlertCircle,
-  Activity,
-  Clock
+  Activity
 } from 'lucide-react'
 import { useData } from '@/contexts/DataContext'
 
