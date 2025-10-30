@@ -17,7 +17,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { 
-  BarChart3, 
   Home, 
   Settings, 
   Mail, 
@@ -152,7 +151,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="cursor-pointer text-red-600 focus:text-red-600"
+                  className="cursor-pointer"
+                  variant="destructive"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
                   Sign out
@@ -167,8 +167,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="flex-1 flex flex-col lg:pl-0">
         {/* Top bar */}
         <header className="bg-white shadow-sm border-b">
-          <div className="flex h-16 items-center justify-between px-6">
-            <div className="flex items-center gap-4">
+          <div className="flex h-16 items-center justify-between px-4 md:px-6">
+            <div className="flex items-center gap-2 md:gap-4 flex-1">
               <Button
                 variant="ghost"
                 size="sm"
@@ -179,19 +179,19 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </Button>
               
               {/* Search */}
-              <div className="relative w-96 hidden sm:block">
+              <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
                 <Input
-                  placeholder="Search websites, emails, contacts..."
+                  placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 w-full"
                 />
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
-              <Badge variant="outline">
+            <div className="flex items-center gap-2 md:gap-4">
+              <Badge variant="outline" className="hidden sm:flex">
                 {user?.role}
               </Badge>
               
@@ -206,7 +206,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
         {/* Page content */}
         <main className="flex-1 overflow-auto">
-          <div className="p-6">
+          <div className="p-4 md:p-6">
             {children}
           </div>
         </main>

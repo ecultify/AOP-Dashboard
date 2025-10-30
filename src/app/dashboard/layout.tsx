@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/auth-context'
+import { useData } from '@/contexts/DataContext'
 import { DashboardLayout } from '@/components/dashboard-layout'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -13,6 +14,7 @@ export default function DashboardLayoutWrapper({
   children: React.ReactNode
 }) {
   const { isAuthenticated, isLoading } = useAuth()
+  const { fetchAllData } = useData()
   const router = useRouter()
 
   useEffect(() => {
@@ -20,6 +22,13 @@ export default function DashboardLayoutWrapper({
       router.push('/')
     }
   }, [isAuthenticated, isLoading, router])
+
+  // Fetch data once when dashboard is accessed
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchAllData()
+    }
+  }, [isAuthenticated, fetchAllData])
 
   if (isLoading) {
     return (
