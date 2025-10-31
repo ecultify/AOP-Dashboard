@@ -15,6 +15,7 @@ export interface Website {
   contactName?: string
   keywordsUsed: string
   platform?: string
+  socialLinks?: string
 }
 
 export interface Keyword {

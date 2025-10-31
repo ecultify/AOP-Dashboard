@@ -25,13 +25,15 @@ import {
   Menu,
   LogOut,
   User,
-  Globe
+  Globe,
+  BarChart3
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: Home },
   { name: 'Websites', href: '/dashboard/websites', icon: Globe },
+  { name: 'Semrush Sites', href: '/dashboard/semrush', icon: BarChart3 },
   { name: 'Email Outreach', href: '/dashboard/emails', icon: Mail },
   { name: 'Performance', href: '/dashboard/performance', icon: TrendingUp },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
