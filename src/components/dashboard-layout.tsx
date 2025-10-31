@@ -20,7 +20,6 @@ import {
   Home, 
   Settings, 
   Mail, 
-  TrendingUp, 
   Search, 
   Menu,
   LogOut,
@@ -35,8 +34,6 @@ const navigation = [
   { name: 'Websites', href: '/dashboard/websites', icon: Globe },
   { name: 'Semrush Sites', href: '/dashboard/semrush', icon: BarChart3 },
   { name: 'Email Outreach', href: '/dashboard/emails', icon: Mail },
-  { name: 'Performance', href: '/dashboard/performance', icon: TrendingUp },
-  { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ]
 
 interface DashboardLayoutProps {
